@@ -45,16 +45,20 @@ object arithmetic:
 
     if isZero(left) || isZero(right) then 0
     else
-      val absLeft = abs(left)
+      val absLeft  = abs(left)
       val absRight = abs(right)
-      val result = helper(absRight, 0, absLeft)
+      val result   = helper(absRight, 0, absLeft)
       if (isNonNegative(left) && isNonNegative(right)) || (!isNonNegative(left) && !isNonNegative(right)) then result
       else negate(result)
 
   def power(base: Number, p: Number): Number =
-    require(p >= 0, "Power must be non-negative")
-    require(base != 0 || p != 0, "0^0 is undefined")
 
-    ???
+    @tailrec
+    def helper(exp: Number, acc: Number): Number =
+      if isZero(exp) then acc
+      else helper(decrement(exp), multiplication(acc, base))
+
+    if isZero(p) then 1
+    else helper(p, 1)
 
 end arithmetic

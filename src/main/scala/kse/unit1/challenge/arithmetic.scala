@@ -23,11 +23,11 @@ object arithmetic:
       if isNonNegative(value) then value
       else -value
 
+  @tailrec
   def addition(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
-
-    ???
+    if isZero(left) then right
+    else if isNonNegative(left) then addition(decrement(left), increment(right))
+    else addition(increment(left), decrement(right))
 
   def multiplication(left: Number, right: Number): Number =
     require(left >= 0, "Left must be non-negative")
@@ -40,3 +40,5 @@ object arithmetic:
     require(base != 0 || p != 0, "0^0 is undefined")
 
     ???
+
+end arithmetic

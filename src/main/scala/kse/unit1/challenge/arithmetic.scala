@@ -30,10 +30,26 @@ object arithmetic:
     else addition(increment(left), decrement(right))
 
   def multiplication(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
+    @tailrec
+    def helper(count: Number, acc: Number, absLeft: Number): Number =
+      if isZero(count) then acc
+      else helper(decrement(count), addition(acc, absLeft), absLeft)
 
-    ???
+    def negate(value: Number): Number =
+      @tailrec
+      def loop(current: Number, acc: Number): Number =
+        if isZero(current) then acc
+        else loop(decrement(current), decrement(acc))
+
+      loop(abs(value), 0)
+
+    if isZero(left) || isZero(right) then 0
+    else
+      val absLeft = abs(left)
+      val absRight = abs(right)
+      val result = helper(absRight, 0, absLeft)
+      if (isNonNegative(left) && isNonNegative(right)) || (!isNonNegative(left) && !isNonNegative(right)) then result
+      else negate(result)
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")

@@ -52,6 +52,8 @@ object arithmetic:
       else negate(result)
 
   def power(base: Number, p: Number): Number =
+    require(p >= 0, "Power must be non-negative")
+    require(base != 0 || p != 0, "0^0 is undefined")
 
     @tailrec
     def helper(exp: Number, acc: Number): Number =

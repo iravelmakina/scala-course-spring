@@ -31,36 +31,33 @@ object arithmetic:
 
   def multiplication(left: Number, right: Number): Number =
     @tailrec
-    def helper(count: Number, acc: Number, absLeft: Number): Number =
+    def multiplyAccumulate(count: Number, acc: Number, absLeft: Number): Number =
       if isZero(count) then acc
-      else helper(decrement(count), addition(acc, absLeft), absLeft)
+      else multiplyAccumulate(decrement(count), addition(acc, absLeft), absLeft)
 
-    def negate(value: Number): Number =
-      @tailrec
-      def loop(current: Number, acc: Number): Number =
-        if isZero(current) then acc
-        else loop(decrement(current), decrement(acc))
-
-      loop(abs(value), 0)
+    @tailrec
+    def negateAccumulate(current: Number, acc: Number): Number =
+      if isZero(current) then acc
+      else negateAccumulate(decrement(current), decrement(acc))
 
     if isZero(left) || isZero(right) then 0
     else
       val absLeft  = abs(left)
       val absRight = abs(right)
-      val result   = helper(absRight, 0, absLeft)
+      val result   = multiplyAccumulate(absRight, 0, absLeft)
       if (isNonNegative(left) && isNonNegative(right)) || (!isNonNegative(left) && !isNonNegative(right)) then result
-      else negate(result)
+      else negateAccumulate(result, 0)
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")
     require(base != 0 || p != 0, "0^0 is undefined")
 
     @tailrec
-    def helper(exp: Number, acc: Number): Number =
+    def powerAccumulate(exp: Number, acc: Number): Number =
       if isZero(exp) then acc
-      else helper(decrement(exp), multiplication(acc, base))
+      else powerAccumulate(decrement(exp), multiplication(acc, base))
 
     if isZero(p) then 1
-    else helper(p, 1)
+    else powerAccumulate(p, 1)
 
 end arithmetic

@@ -33,7 +33,7 @@ object arithmetic:
     @tailrec
     def multiplyAccumulate(count: Number, value: Number, acc: Number): Number =
       if isZero(count) then acc
-      else multiplyAccumulate(decrement(count), value, addition(acc, value))
+      else multiplyAccumulate(decrement(count), value, addition(value, acc))
 
     if isZero(left) || isZero(right) then 0
     else if isNonNegative(left) then multiplyAccumulate(decrement(left), right, right)
@@ -41,7 +41,6 @@ object arithmetic:
     else multiplyAccumulate(decrement(abs(right)), abs(left), abs(left))
 
   def power(base: Number, p: Number): Number =
-
     @tailrec
     def powerAccumulate(exp: Number, acc: Number): Number =
       if isZero(exp) then acc

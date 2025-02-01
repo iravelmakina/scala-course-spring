@@ -31,18 +31,16 @@ object arithmetic:
 
   def multiplication(left: Number, right: Number): Number =
     @tailrec
-    def multiplyAccumulate(count: Number, value: Number, acc: Number = 0): Number =
+    def multiplyAccumulate(count: Number, value: Number, acc: Number): Number =
       if isZero(count) then acc
       else multiplyAccumulate(decrement(count), value, addition(acc, value))
 
     if isZero(left) || isZero(right) then 0
-    else if isNonNegative(left) then multiplyAccumulate(left, right)  // +-
-    else if isNonNegative(right) then multiplyAccumulate(right, left) // -+ ++
-    else multiplyAccumulate(abs(right), abs(left))                    // --
+    else if isNonNegative(left) then multiplyAccumulate(decrement(left), right, right)
+    else if isNonNegative(right) then multiplyAccumulate(decrement(right), left, left)
+    else multiplyAccumulate(decrement(abs(right)), abs(left), abs(left))
 
   def power(base: Number, p: Number): Number =
-    require(p >= 0, "Power must be non-negative")
-    require(base != 0 || p != 0, "0^0 is undefined")
 
     @tailrec
     def powerAccumulate(exp: Number, acc: Number): Number =
@@ -50,6 +48,6 @@ object arithmetic:
       else powerAccumulate(decrement(exp), multiplication(acc, base))
 
     if isZero(p) then 1
-    else powerAccumulate(p, 1)
+    else powerAccumulate(decrement(p), base)
 
 end arithmetic

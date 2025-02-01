@@ -31,22 +31,14 @@ object arithmetic:
 
   def multiplication(left: Number, right: Number): Number =
     @tailrec
-    def multiplyAccumulate(count: Number, acc: Number, absLeft: Number): Number =
+    def multiplyAccumulate(count: Number, value: Number, acc: Number = 0): Number =
       if isZero(count) then acc
-      else multiplyAccumulate(decrement(count), addition(acc, absLeft), absLeft)
-
-    @tailrec
-    def negateAccumulate(current: Number, acc: Number): Number =
-      if isZero(current) then acc
-      else negateAccumulate(decrement(current), decrement(acc))
+      else multiplyAccumulate(decrement(count), value, addition(acc, value))
 
     if isZero(left) || isZero(right) then 0
-    else
-      val absLeft  = abs(left)
-      val absRight = abs(right)
-      val result   = multiplyAccumulate(absRight, 0, absLeft)
-      if (isNonNegative(left) && isNonNegative(right)) || (!isNonNegative(left) && !isNonNegative(right)) then result
-      else negateAccumulate(result, 0)
+    else if isNonNegative(left) then multiplyAccumulate(left, right)  // +-
+    else if isNonNegative(right) then multiplyAccumulate(right, left) // -+ ++
+    else multiplyAccumulate(abs(right), abs(left))                    // --
 
   def power(base: Number, p: Number): Number =
     require(p >= 0, "Power must be non-negative")

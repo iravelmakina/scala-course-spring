@@ -24,7 +24,7 @@ object NegationSpecification extends Properties("Negation"):
     !True == False
 
   property("!False is True") = propBoolean:
-    !False== True
+    !False == True
 
 end NegationSpecification
 

@@ -70,11 +70,20 @@ end ImplicationSpecification
 // Optional challenge
 object EquivalenceSpecification extends Properties("Equivalence"):
 
-  property("a ↔ b holds when a == b") = forAll: (a: Boolean, b: Boolean) =>
-    (a == b) ==> ((a ↔ b) == True)
+  property("(a ↔ b) equals (a == b)") = forAll: (a: Boolean, b: Boolean) =>
+    (a ↔ b) == (if (a == b) True else False)
 
-  property("a ↔ b does not hold when a != b") = forAll: (a: Boolean, b: Boolean) =>
-    (a != b) ==> ((a ↔ b) == False)
+  property("Equivalence reflexivity: a ↔ a is True") = forAll: (a: Boolean) =>
+    (a ↔ a) == True
+
+  property("Equivalence symmetry: a ↔ b equals b ↔ a") = forAll: (a: Boolean, b: Boolean) =>
+    (a ↔ b) == (b ↔ a)
+
+  property("Equivalence transitivity: if a ↔ b and b ↔ c then a ↔ c") = forAll: (a: Boolean, b: Boolean, c: Boolean) =>
+    (((a ↔ b) == True) && ((b ↔ c) == True)) ==> ((a ↔ c) == True)
+
+  property("Equivalence associativity: (a ↔ b) ↔ c equals a ↔ (b ↔ c)") = forAll: (a: Boolean, b: Boolean, c: Boolean) =>
+    ((a ↔ b) ↔ c) == (a ↔ (b ↔ c))
 
 end EquivalenceSpecification
 

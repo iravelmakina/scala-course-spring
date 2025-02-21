@@ -23,20 +23,30 @@ object arithmetic:
       if isNonNegative(value) then value
       else -value
 
+  @tailrec
   def addition(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
-
-    ???
+    if isZero(left) then right
+    else if isNonNegative(left) then addition(decrement(left), increment(right))
+    else addition(increment(left), decrement(right))
 
   def multiplication(left: Number, right: Number): Number =
-    require(left >= 0, "Left must be non-negative")
-    require(right >= 0, "Right must be non-negative")
+    @tailrec
+    def multiplyAccumulate(count: Number, value: Number, acc: Number): Number =
+      if isZero(count) then acc
+      else multiplyAccumulate(decrement(count), value, addition(value, acc))
 
-    ???
+    if isZero(left) || isZero(right) then 0
+    else if isNonNegative(left) then multiplyAccumulate(decrement(left), right, right)
+    else if isNonNegative(right) then multiplyAccumulate(decrement(right), left, left)
+    else multiplyAccumulate(decrement(abs(right)), abs(left), abs(left))
 
   def power(base: Number, p: Number): Number =
-    require(p >= 0, "Power must be non-negative")
-    require(base != 0 || p != 0, "0^0 is undefined")
+    @tailrec
+    def powerAccumulate(exp: Number, acc: Number): Number =
+      if isZero(exp) then acc
+      else powerAccumulate(decrement(exp), multiplication(acc, base))
 
-    ???
+    if isZero(p) then 1
+    else powerAccumulate(decrement(p), base)
+
+end arithmetic

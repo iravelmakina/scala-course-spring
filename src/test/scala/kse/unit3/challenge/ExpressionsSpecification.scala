@@ -52,71 +52,53 @@ end NegationEvaluationSpecification
 
 object ConjunctionEvaluationSpecification extends Properties("Conjunction Evaluation"):
 
-  property("True ∧ expression should be evaluated to expression evaluation") = forAll((expression: Expression) =>
-    (True ∧ expression).evaluate == expression.evaluate
-  )
+  property("True ∧ expression should be evaluated to expression evaluation") =
+    forAll((expression: Expression) => (True ∧ expression).evaluate == expression.evaluate)
 
-  property("expression ∧ True should be evaluated to expression evaluation") = forAll((expression: Expression) =>
-    (expression ∧ True).evaluate == expression.evaluate
-  )
+  property("expression ∧ True should be evaluated to expression evaluation") =
+    forAll((expression: Expression) => (expression ∧ True).evaluate == expression.evaluate)
 
-  property("False ∧ expression should be evaluated to False") = forAll((expression: Expression) =>
-    (False ∧ expression).evaluate == False
-  )
+  property("False ∧ expression should be evaluated to False") = forAll((expression: Expression) => (False ∧ expression).evaluate == False)
 
-  property("expression ∧ False should be evaluated to False") = forAll((expression: Expression) =>
-    (expression ∧ False).evaluate == False
-  )
+  property("expression ∧ False should be evaluated to False") = forAll((expression: Expression) => (expression ∧ False).evaluate == False)
 
-  property("left ∧ right should be correctly evaluated") = forAll((left: Boolean, right: Boolean) =>
-    (left ∧ right).evaluate == (left.evaluate ∧ right.evaluate).evaluate
-  )
+  property("left ∧ right should be correctly evaluated") =
+    forAll((left: Boolean, right: Boolean) => (left ∧ right).evaluate == (left.evaluate ∧ right.evaluate).evaluate)
 
 end ConjunctionEvaluationSpecification
 
 object DisjunctionEvaluationSpecification extends Properties("Disjunction Evaluation"):
 
-  property("True ∨ expression should be evaluated to True") = forAll((expression: Expression) =>
-    (True ∨ expression).evaluate == True
-  )
+  property("True ∨ expression should be evaluated to True") = forAll((expression: Expression) => (True ∨ expression).evaluate == True)
 
-  property("expression ∨ True should be evaluated to True") = forAll((expression: Expression) =>
-    (expression ∨ True).evaluate == True
-  )
+  property("expression ∨ True should be evaluated to True") = forAll((expression: Expression) => (expression ∨ True).evaluate == True)
 
-  property("False ∨ expression should be evaluated to expression evaluation") = forAll((expression: Expression) =>
-    (False ∨ expression).evaluate == expression.evaluate
-  )
+  property("False ∨ expression should be evaluated to expression evaluation") =
+    forAll((expression: Expression) => (False ∨ expression).evaluate == expression.evaluate)
 
-  property("expression ∨ False should be evaluated to expression evaluation") = forAll((expression: Expression) =>
-    (expression ∨ False).evaluate == expression.evaluate
-  )
+  property("expression ∨ False should be evaluated to expression evaluation") =
+    forAll((expression: Expression) => (expression ∨ False).evaluate == expression.evaluate)
 
-  property("left ∨ right should be correctly evaluated") = forAll((left: Boolean, right: Boolean) =>
-    (left ∨ right).evaluate == (left.evaluate ∨ right.evaluate).evaluate
-  )
+  property("left ∨ right should be correctly evaluated") =
+    forAll((left: Boolean, right: Boolean) => (left ∨ right).evaluate == (left.evaluate ∨ right.evaluate).evaluate)
 
 end DisjunctionEvaluationSpecification
 
 object ImplicationEvaluationSpecification extends Properties("Implication Evaluation"):
 
-  property("True → expression should be evaluated to expression evaluation") = forAll((expression: Expression) =>
-    (True → expression).evaluate == expression.evaluate
-  )
+  property("True → expression should be evaluated to expression evaluation") =
+    forAll((expression: Expression) => (True → expression).evaluate == expression.evaluate)
 
-  property("False → expression should be evaluated to True") = forAll((expression: Expression) =>
-    (False → expression).evaluate == True
-  )
+  property("False → expression should be evaluated to True") = forAll((expression: Expression) => (False → expression).evaluate == True)
 
-  property("left → right should be correctly evaluated") = forAll((left: Boolean, right: Boolean) =>
-    (left → right).evaluate == (left.evaluate → right.evaluate).evaluate
-  )
+  property("left → right should be correctly evaluated") =
+    forAll((left: Boolean, right: Boolean) => (left → right).evaluate == (left.evaluate → right.evaluate).evaluate)
 
 end ImplicationEvaluationSpecification
 
 object EquivalenceEvaluationSpecification extends Properties("Equivalence Evaluation"):
 
-  property("Reflexivity") =  forAll: (a: Boolean) =>
+  property("Reflexivity") = forAll: (a: Boolean) =>
     (a ↔ a).evaluate == True
 
   property("Symmetry") = forAll: (a: Boolean, b: Boolean) =>
@@ -132,7 +114,7 @@ end EquivalenceEvaluationSpecification
 
 object BooleanSubstitutionSpecification extends Properties("Boolean Substitution"):
 
-  property("substitution into boolean should make no changes") =  forAll: (boolean: Boolean, variable: Variable, substitution: Expression) =>
+  property("substitution into boolean should make no changes") = forAll: (boolean: Boolean, variable: Variable, substitution: Expression) =>
     boolean.substitute(variable, substitution) == boolean
 
 end BooleanSubstitutionSpecification
@@ -153,7 +135,7 @@ object ExpressionSubstitutionSpecification extends Properties("Expression Substi
 
   property("substitution into !expression should be equal to !(substitution into expression)") = forAll:
     (expression: Expression, variable: Variable, substitution: Expression) =>
-    (!expression).substitute(variable, substitution) == Negation(expression.substitute(variable, substitution))
+      (!expression).substitute(variable, substitution) == Negation(expression.substitute(variable, substitution))
 
   property("substitution into left ∧ right should be equal to substitution into left ∧ substitution into right") = forAll:
     (left: Expression, right: Expression, variable: Variable, substitution: Expression) =>

@@ -37,14 +37,13 @@ object expressions:
       Negation(expression.substitute(variable, substitution))
 
     override def toString: String =
-      s"¬$expression"
+      s"!$expression"
 
   case class Conjunction(left: Expression, right: Expression) extends Expression:
 
     def evaluate: Expression =
       (left.evaluate, right.evaluate) match
         case (False, _) | (_, False) => False
-        case (True, True)            => True
         case (True, expr)            => expr
         case (expr, True)            => expr
         case (left, right)           => Conjunction(left, right)

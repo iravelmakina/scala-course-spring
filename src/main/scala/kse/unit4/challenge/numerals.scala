@@ -55,12 +55,11 @@ object numerals:
 
     def toInt: Int = 0
 
-    override def toString: String = "Zero"
+    override def toString: String = toInt.toString
 
-    override def equals(that: Any): Boolean =
-      that match
-        case that: Zero.type => true
-        case _               => false
+    override def equals(that: Any): Boolean = that.isInstanceOf[Zero.type]
+
+    override def hashCode: Int = 0
 
   object Successor:
     def unapply(successor: Successor): Option[Numeral] = Option(successor.predecessor)
@@ -89,9 +88,11 @@ object numerals:
 
     def toInt: Int = 1 + n.toInt
 
-    override def toString: String = s"Suc($predecessor)"
+    override def toString: String = toInt.toString
 
     override def equals(that: Any): Boolean =
       that match
-        case Successor(m) => predecessor == m
-        case _            => false
+        case that: Successor => that.predecessor == this.predecessor
+        case _               => false
+
+    override def hashCode: Int = predecessor.hashCode

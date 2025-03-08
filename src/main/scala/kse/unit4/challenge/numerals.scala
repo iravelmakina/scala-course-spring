@@ -57,7 +57,7 @@ object numerals:
 
     override def toString: String = toInt.toString
 
-    override def equals(that: Any): Boolean = that.isInstanceOf[Zero.type]
+    override def equals(that: Any): Boolean = that.isInstanceOf[Zero]
 
     override def hashCode: Int = 0
 
@@ -95,4 +95,4 @@ object numerals:
         case that: Successor => that.predecessor == this.predecessor
         case _               => false
 
-    override def hashCode: Int = predecessor.hashCode
+    override def hashCode: Int = 1 + predecessor.hashCode

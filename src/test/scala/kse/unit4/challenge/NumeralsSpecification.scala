@@ -93,10 +93,8 @@ object SubtractionSpecification extends Properties("Subtraction"):
   property("Successor(n) - Successor(m) == n - m") = forAll: (n: Numeral, m: Numeral) =>
     (Successor(n) - Successor(m)) == n - m
 
-  property("Subtracting larger from smaller is Zero") = forAll: (a: Numeral, b: Numeral) =>
-    val x = a
-    val y = a + b
-    (x - y) == Zero
+  property("Subtracting larger or equal from value is Zero") = forAll: (a: Numeral, b: Numeral) =>
+    (a - (a + b)) == Zero
 
 end SubtractionSpecification
 
@@ -105,17 +103,11 @@ object CombinedOperationsSpecification extends Properties("CombinedOperations") 
   property("Adding and then subtracting the same value should return the original value") = forAll: (a: Numeral, b: Numeral) =>
     ((a + b) - b) == a
 
-  property("Subtraction and then addition should return the original value if original value > subtrahend") = forAll: (a: Numeral, b: Numeral) =>
-    val x = a + b
-    val y = b
-    ((x - y) + y) == x
+  property("Subtraction and then addition should return the original value if original value >= subtrahend") = forAll: (a: Numeral, b: Numeral) =>
+    (((a + b) - b) + b) == (a + b)
 
-  property("Subtraction and addition are consistent if original value > subtrahend") = forAll: (a: Numeral, b: Numeral, c: Numeral, d: Numeral) =>
-    val x = a + b
-    val y = b
-    val z = c + d
-    val w = d
-    ((x - y) + (z - w)) == ((x + z) - (y + w))
+  property("Subtraction and addition are consistent if original value >= subtrahend") = forAll: (a: Numeral, b: Numeral, c: Numeral, d: Numeral) =>
+    (((a + b) - b) + ((c + d) - d)) == ((a + b) + (c + d)) - (b + d)
 }
 
 object ComparisonSpecification extends Properties("Comparison"):

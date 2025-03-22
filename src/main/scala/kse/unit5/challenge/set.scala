@@ -97,7 +97,7 @@ object set:
     @targetName("difference")
     infix def \(that: NumeralSet): NumeralSet =
       if that.contains(element) then (left \ that) ∪ (right \ that)
-      else NonEmpty((left \ that), element, (right \ that))
+      else NonEmpty(left \ that, element, right \ that)
 
     override def toString: String = s"[$left - [$element] - $right]"
 

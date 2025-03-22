@@ -41,18 +41,18 @@ object set:
 
     infix def contains(x: Numeral): Boolean = false
 
-    infix def include(x: Numeral): NumeralSet = NonEmpty(this, x, this)
+    infix def include(x: Numeral): NumeralSet = NonEmpty(Empty, x, Empty)
 
-    infix def remove(x: Numeral): NumeralSet = this
+    infix def remove(x: Numeral): NumeralSet = Empty
 
     @targetName("union")
     infix def ∪(that: NumeralSet): NumeralSet = that
 
     @targetName("intersection")
-    infix def ∩(that: NumeralSet): NumeralSet = this
+    infix def ∩(that: NumeralSet): NumeralSet = Empty
 
     @targetName("difference")
-    infix def \(that: NumeralSet): NumeralSet = this
+    infix def \(that: NumeralSet): NumeralSet = Empty
 
     override def toString: String = "[*]"
 
@@ -97,7 +97,7 @@ object set:
     @targetName("difference")
     infix def \(that: NumeralSet): NumeralSet =
       if that.contains(element) then (left \ that) ∪ (right \ that)
-      else NonEmpty(left \ that, element, right \ that)
+      else NonEmpty((left \ that), element, (right \ that))
 
     override def toString: String = s"[$left - [$element] - $right]"
 

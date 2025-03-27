@@ -56,7 +56,10 @@ object set:
 
     override def toString: String = "[*]"
 
-    override def equals(obj: Any): Boolean = obj.isInstanceOf[Empty]
+    override def equals(obj: Any): Boolean =
+      obj match
+        case _: Empty.type => true
+        case _             => false
 
     override def hashCode: Int = 0
 
@@ -103,7 +106,7 @@ object set:
 
     override def equals(obj: Any): Boolean =
       obj match
-        case s @ NonEmpty(left, v, right) => s.forAll(element => this.exists(_ == element))
+        case s @ NonEmpty(left, v, right) => s.forAll(element => this.exists(_ == element)) && this.forAll(element => s.exists(_ == element))
         case _                            => false
 
     override def hashCode: Int = left.hashCode + element.hashCode + right.hashCode

@@ -58,8 +58,8 @@ object set:
 
     override def equals(obj: Any): Boolean =
       obj match
-        case _: Empty.type => true
-        case _             => false
+        case _: Empty => true
+        case _        => false
 
     override def hashCode: Int = 0
 
@@ -72,18 +72,18 @@ object set:
     infix def exists(predicate: A => Boolean): Boolean = predicate(element) || left.exists(predicate) || right.exists(predicate)
 
     infix def contains[B >: A: Order](x: B): Boolean =
-      if (x == element) true
-      else if (x < element) left.contains(x)
+      if x == element then true
+      else if x < element then left.contains(x)
       else right.contains(x)
 
     infix def include[B >: A: Order](x: B): Set[B] =
-      if (x == element) this
-      else if (x < element) NonEmpty(left.include(x), element, right)
+      if x == element then this
+      else if x < element then NonEmpty(left.include(x), element, right)
       else NonEmpty(left, element, right.include(x))
 
     infix def remove[B >: A: Order](x: B): Set[B] =
       if x == element then left ∪ right
-      else if (x < element) then NonEmpty(left.remove(x), element, right)
+      else if x < element then NonEmpty(left.remove(x), element, right)
       else NonEmpty(left, element, right.remove(x))
 
     @targetName("union")

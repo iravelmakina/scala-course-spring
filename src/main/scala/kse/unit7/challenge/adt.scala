@@ -10,12 +10,16 @@ object adt:
     def flatMap[Q](f: V => Try[Q]): Try[Q] =
       this match
         case Try.Failure(e) => Try.Failure(e)
-        case Try.Success(v) => f(v)
+        case Try.Success(v) =>
+          try f(v)
+          catch case ex: Throwable => Try.Failure(ex)
 
     def map[Q](f: V => Q): Try[Q] =
       this match
         case Try.Failure(e) => Try.Failure(e)
-        case Try.Success(v) => Try.Success(f(v))
+        case Try.Success(v) =>
+          try Try.Success(f(v))
+          catch case ex: Throwable => Try.Failure(ex)
 
   object Try:
 

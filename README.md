@@ -482,6 +482,13 @@ Using the IntelliJ IDEA UI to manage Git actions is easy.
   * [shelve or stash changes](https://www.jetbrains.com/help/idea/shelving-and-unshelving-changes.html)
 
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+
+
+
 
 
 

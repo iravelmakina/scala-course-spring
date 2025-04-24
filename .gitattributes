@@ -1,0 +1,27 @@
+# --- Source files ---
+*.scala       text eol=lf
+*.sbt         text eol=lf
+*.sc          text eol=lf
+
+# --- Build files ---
+*.conf        text eol=lf
+*.properties  text eol=lf
+
+# --- Markdown / documentation ---
+*.md          text eol=lf
+*.txt         text eol=lf
+
+# --- GitHub Workflows ---
+*.yml         text eol=lf
+*.yaml        text eol=lf
+
+# --- Editor & tooling configs ---
+.editorconfig text eol=lf
+*.gitignore   text eol=lf
+*.scalafmt.conf text eol=lf
+
+# --- License ---
+LICENSE       text eol=lf
+
+# --- Default for all other text files ---
+* text=auto
